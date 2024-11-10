@@ -33,6 +33,7 @@ except FileNotFoundError as e:
 
 # Colors
 WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
 # Super class for the character
 class Super(pygame.sprite.Sprite):
@@ -136,6 +137,10 @@ def main():
     last_pipe_x = 400
     pipe_spawn_distance = 500
 
+    # Initialize score
+    score = 0
+    font = pygame.font.Font(None, 36)
+
     running = True
     while running:
         clock.tick(60)
@@ -158,6 +163,9 @@ def main():
             obstacles.add(new_pipe)
             last_pipe_x += pipe_spawn_distance
 
+            # Increase score every time a new pipe is generated
+            score += 1
+
         # Background scrolls based on character's world position for looping effect
         bg_x = -(character.world_x % 750)
 
@@ -168,6 +176,10 @@ def main():
         # Draw all objects
         all_sprites.draw(screen)
         obstacles.draw(screen)
+
+        # Render and display score
+        score_text = font.render(f"Score: {score}", True, BLACK)
+        screen.blit(score_text, (10, 10))
 
         pygame.display.flip()
 
